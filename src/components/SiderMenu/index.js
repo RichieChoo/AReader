@@ -8,37 +8,37 @@ import SiderMenu from './SiderMenu';
  * @param  menus
  */
 const getFlatMenuKeys = menuData => {
-    let keys = [];
-    menuData.forEach(item => {
-        if (item.children) {
-            keys = keys.concat(getFlatMenuKeys(item.children));
-        }
-        keys.push(item.path);
-    });
-    return keys;
+  let keys = [];
+  menuData.forEach(item => {
+    if (item.children) {
+      keys = keys.concat(getFlatMenuKeys(item.children));
+    }
+    keys.push(item.path);
+  });
+  return keys;
 };
 
 const SiderMenuWrapper = props => {
-    const { isMobile, menuData, collapsed, onCollapse } = props;
-    return isMobile ? (
-        <Drawer
-            visible={!collapsed}
-            placement="left"
-            onClose={() => onCollapse(true)}
-            style={{
-                padding: 0,
-                height: '100vh',
-            }}
-        >
-            <SiderMenu
-                {...props}
-                flatMenuKeys={getFlatMenuKeys(menuData)}
-                collapsed={isMobile ? false : collapsed}
-            />
-        </Drawer>
-    ) : (
-        <SiderMenu {...props} flatMenuKeys={getFlatMenuKeys(menuData)} />
-    );
+  const { isMobile, menuData, collapsed, onCollapse } = props;
+  return isMobile ? (
+    <Drawer
+      visible={!collapsed}
+      placement="left"
+      onClose={() => onCollapse(true)}
+      style={{
+        padding: 0,
+        height: '100vh',
+      }}
+    >
+      <SiderMenu
+        {...props}
+        flatMenuKeys={getFlatMenuKeys(menuData)}
+        collapsed={isMobile ? false : collapsed}
+      />
+    </Drawer>
+  ) : (
+    <SiderMenu {...props} flatMenuKeys={getFlatMenuKeys(menuData)} />
+  );
 };
 
 export default SiderMenuWrapper;

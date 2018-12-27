@@ -4,22 +4,14 @@ import GlobalFooter from '@/components/GlobalFooter';
 
 const { Footer } = Layout;
 const FooterView = () => (
-    <Footer style={{ padding: 0 }}>
-        <GlobalFooter
-            links={[
-                {
-                    key: 'github',
-                    title: (
-                        <p>
-                            Copyright <Icon type="github" /> 2018 RichieChoo
-                        </p>
-                    ),
-                    href: 'https://github.com/RichieChoo',
-                    blankTarget: true,
-                },
-            ]}
-            copyright={<Fragment />}
-        />
-    </Footer>
+  <Footer style={{ padding: 0 }}>
+    <GlobalFooter
+      copyright={
+        <Fragment>
+          Copyright <Icon type="copyright" /> 2019 Design By Richie Choo
+        </Fragment>
+      }
+    />
+  </Footer>
 );
 export default FooterView;

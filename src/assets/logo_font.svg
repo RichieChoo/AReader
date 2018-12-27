@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="483px" height="122px" viewBox="0 0 483 122" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>AReader</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <text id="text-1" font-family="BrushScriptMT, Brush Script MT" font-size="160" font-weight="normal" letter-spacing="-2.73000002" fill="#D40318">
+            <tspan x="10.0493751" y="96">AReade</tspan>
+            <tspan x="425.231875" y="96">r</tspan>
+        </text>
+        <filter x="-0.9%" y="-3.2%" width="103.6%" height="108.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="5" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.1780426   0 0 0 0 0.195845842   0 0 0 0 0.256563563  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" x="-9" y="-46" width="500" height="200"></rect>
+        <g id="AReader" fill="#D40318" fill-opacity="1">
+            <use filter="url(#filter-2)" xlink:href="#text-1"></use>
+            <use xlink:href="#text-1"></use>
+        </g>
+    </g>
+</svg>

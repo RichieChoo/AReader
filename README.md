@@ -1,2 +1,1 @@
-# tp
-template project by AReader 2.0
+#use Antd Pro 2.0 to init project
