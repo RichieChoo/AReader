@@ -19,8 +19,8 @@ const ThemeColor = ({ colors, title, value, onChange }) => {
   if (!colors) {
     colorList = [
       {
-        key: 'dust',
-        color: '#F5222D',
+        key: 'ARed',
+        color: '#D40318',
       },
       {
         key: 'volcano',

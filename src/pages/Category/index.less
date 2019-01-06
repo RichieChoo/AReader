@@ -1,0 +1,39 @@
+@import '~antd/lib/style/themes/default.less';
+
+@border-color: #E8E8E8;
+@text-color: #434e59;
+@basic-color:#D40318;
+
+.listWrapper {
+  user-select: none;
+  padding: 40px;
+  .rowWrapper {
+    padding-bottom: 20px;
+
+  }
+  .listItem {
+    height: 200px;
+    box-shadow: 2px 2px 2px @border-color;
+    .left {
+      img {
+        width: 100%;
+        height: 200px;
+      }
+    }
+    .right {
+      color: @text-color;
+      &>p{
+        color:@text-color;
+        &>span{
+          color:@basic-color
+        }
+      }
+      &>p:first-child{
+        font-weight: 600;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+
