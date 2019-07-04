@@ -47,12 +47,12 @@ export default [
           }
         ]
       },
-      {
-        path: "/rank",
-        name: "排行",
-        icon: "like",
-        component: "./Rank"
-      },
+      // {
+      //   path: "/rank",
+      //   name: "排行",
+      //   icon: "like",
+      //   component: "./Rank"
+      // },
       {
         name: "exception",
         icon: "warning",

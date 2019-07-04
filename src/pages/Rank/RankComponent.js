@@ -4,10 +4,10 @@ import { Row, Col, Radio, Tabs, message, List } from "antd";
 import { filterFalse } from "../../utils/utils";
 import styles from "./index.less";
 import unShow from "./../../assets/unShow.jpg";
-const namespace = "category";
+const namespace = "rank";
 
-@connect(({ category, loading }) => ({
-  category,
+@connect(({ rank, loading }) => ({
+  rank,
   loading: loading.effects[`${namespace}/fetch`]
 }))
 class AppComponent extends PureComponent {
@@ -28,7 +28,7 @@ class AppComponent extends PureComponent {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const {
-      category: { data = {} }
+      rank: { data = {} }
     } = nextProps;
     const { minors = [] } = data;
     const { major, minArr } = prevState;
@@ -113,7 +113,7 @@ class AppComponent extends PureComponent {
 
   render() {
     const {
-      category: { data = {} },
+      rank: { data = {} },
       loading
     } = this.props;
     const { minors = [], books = {} } = data;
