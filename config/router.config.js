@@ -15,13 +15,13 @@ export default [
     Routes: ["src/pages/Authorized"],
     authority: ["admin", "user"],
     routes: [
-      { path: "/", redirect: "/bookShelf/list" },
-      {
-        path: "/bookShelf/list",
-        name: "书架",
-        icon: "book",
-        component: "./BookShelf"
-      },
+      { path: "/", redirect: "/category/male" },
+      // {
+      //   path: "/bookShelf/list",
+      //   name: "书架",
+      //   icon: "book",
+      //   component: "./BookShelf"
+      // },
       {
         path: "/category",
         name: "分类",

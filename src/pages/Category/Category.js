@@ -1,10 +1,10 @@
-import React, { PureComponent, Fragment } from "react";
-import { connect } from "dva";
-import { Row, Col, Radio, Tabs, message, List } from "antd";
-import { filterFalse } from "../../utils/utils";
-import styles from "./index.less";
-import unShow from "./../../assets/unShow.jpg";
-const namespace = "category";
+import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'dva';
+import { Row, Col, Radio, Tabs, message, List } from 'antd';
+import { filterFalse } from '../../utils/utils';
+import styles from './index.less';
+import unShow from './../../assets/unShow.jpg';
+const namespace = 'category';
 
 @connect(({ category, loading }) => ({
   category,
@@ -14,13 +14,13 @@ class AppComponent extends PureComponent {
   constructor(props) {
     super(props);
     // this.imgRef = React.createRef();
-    let { gender = "male" } = props;
+    let { gender = 'male' } = props;
     this.state = {
       pageNum: 1,
       pageSize: 10,
       major: false,
       minor: false,
-      type: "hot",
+      type: 'hot',
       gender,
       minArr: []
     };
@@ -45,10 +45,9 @@ class AppComponent extends PureComponent {
   }
 
   fetchList = () => {
-    message.destroy();
-    message.loading("加载中", 0);
     const { dispatch } = this.props;
     const { gender, type, major, minor, pageNum, pageSize } = this.state;
+    console.warn('pageSize', pageSize);
     dispatch({
       type: `${namespace}/fetch`,
       payload: { gender, type, major, minor, pageNum, pageSize }
@@ -56,6 +55,7 @@ class AppComponent extends PureComponent {
   };
 
   onShowSizeChange = (pageNum, pageSize) => {
+    console.warn('pageNum, pageSize', pageNum, pageSize);
     this.setState(
       {
         pageNum,
@@ -75,7 +75,7 @@ class AppComponent extends PureComponent {
   };
 
   handleChangeRadio = (e, item) => {
-    let minor = item.mins[0] ? item.mins[0] : "NoMinor";
+    let minor = item.mins[0] ? item.mins[0] : 'NoMinor';
     this.setState(
       {
         major: e.target.value,
@@ -96,7 +96,7 @@ class AppComponent extends PureComponent {
   };
 
   handleChangeRadioType = e => {
-    console.warn(" e.target.value", e.target.value);
+    console.warn(' e.target.value', e.target.value);
     this.setState(
       {
         type: e.target.value
@@ -133,9 +133,10 @@ class AppComponent extends PureComponent {
       onChange: this.handleChangePage,
       onShowSizeChange: this.onShowSizeChange,
       current: pageNum,
+      
       total: books.total
     };
-    return loading ? null : (
+    return (
       <div className={styles.listWrapper}>
         <Row className={styles.rowWrapper}>
           作品类型：
@@ -195,11 +196,12 @@ class AppComponent extends PureComponent {
             itemLayout="vertical"
             grid={{ gutter: 24, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }}
             size="large"
+            loading={loading}
             pagination={books.total ? pagination : false}
             dataSource={books.books}
             renderItem={item => {
-              const cover = item.cover.includes("/agent/")
-                ? decodeURIComponent(item.cover.replace(/\/agent\//, ""))
+              const cover = item.cover.includes('/agent/')
+                ? decodeURIComponent(item.cover.replace(/\/agent\//, ''))
                 : decodeURIComponent(item.cover);
               return (
                 <List.Item className={styles.listItem}>
@@ -221,7 +223,7 @@ class AppComponent extends PureComponent {
                       </p>
                       <p>
                         {item.shortIntro.length > 88
-                          ? item.shortIntro.substring(0, 88) + "..."
+                          ? item.shortIntro.substring(0, 88) + '...'
                           : item.shortIntro}
                       </p>
                       <p>

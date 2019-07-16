@@ -2,7 +2,6 @@ import { getCats, getMinor, getCatsBooks } from "@/services/category";
 import { getMapAndOptionsFromList } from "./../../../utils/lang";
 import { getMap } from "@/services/map";
 import { routerRedux } from "dva/router";
-import { message } from "antd";
 
 export default {
   namespace: "category",
@@ -45,8 +44,6 @@ export default {
       }
 
       if (catsBooks.ok) {
-        message.destroy();
-        message.success("已获取最新内容");
         yield put({
           type: "save",
           payload: {
