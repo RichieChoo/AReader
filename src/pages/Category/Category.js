@@ -47,7 +47,6 @@ class AppComponent extends PureComponent {
   fetchList = () => {
     const { dispatch } = this.props;
     const { gender, type, major, minor, pageNum, pageSize } = this.state;
-    console.warn('pageSize', pageSize);
     dispatch({
       type: `${namespace}/fetch`,
       payload: { gender, type, major, minor, pageNum, pageSize }
@@ -105,6 +104,9 @@ class AppComponent extends PureComponent {
     );
   };
 
+  handleGoToDetail = (item) => {
+    message.info(JSON.stringify(item))
+  }
   // handleResolveImg=()=>{
   //   console.warn("this.imgRef.current", this.imgRef.current);
   //   // this.imgRef.current.style.display="none";
@@ -133,7 +135,7 @@ class AppComponent extends PureComponent {
       onChange: this.handleChangePage,
       onShowSizeChange: this.onShowSizeChange,
       current: pageNum,
-      
+
       total: books.total
     };
     return (
@@ -204,7 +206,7 @@ class AppComponent extends PureComponent {
                 ? decodeURIComponent(item.cover.replace(/\/agent\//, ''))
                 : decodeURIComponent(item.cover);
               return (
-                <List.Item className={styles.listItem}>
+                <List.Item className={styles.listItem} onClick={()=>this.handleGoToDetail(item)}>
                   <Row gutter={16}>
                     <Col span={6} className={styles.left}>
                       <img

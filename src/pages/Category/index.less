@@ -5,32 +5,44 @@
 @basic-color: #d40318;
 
 .listWrapper {
-  user-select: none;
-  padding: 40px;
-  .rowWrapper {
-    padding-bottom: 20px;
-  }
-  .listItem {
-    height: 200px;
-    box-shadow: 2px 2px 2px @border-color;
-    .left {
-      img {
-        width: 130px;
-        height: 200px;
+	user-select: none;
+	padding: 40px;
+	.rowWrapper {
+		padding-bottom: 20px;
+	}
+	.listItem {
+		border: 1px solid #eee;
+		&:hover {
+			cursor: pointer;
+			box-shadow: 2px 2px 2px @primary-color;
+			.right {
+				p:first-child {
+					color: @primary-color;
+					text-decoration-color: @primary-color;
+				}
+			}
+		}
+		height: 200px;
+		box-shadow: 2px 2px 2px @border-color;
+		.left {
+			img {
+				width: 100%;
+				height: 190px;
+				margin: 5px;
+			}
+		}
+		.right {
+			color: @text-color;
+			& > p {
+				color: @text-color;
+				& > span {
+					color: @basic-color;
+				}
+			}
+			& > p:first-child {
+				font-weight: 600;
+				font-size: 20px;
       }
-    }
-    .right {
-      color: @text-color;
-      & > p {
-        color: @text-color;
-        & > span {
-          color: @basic-color;
-        }
-      }
-      & > p:first-child {
-        font-weight: 600;
-        font-size: 20px;
-      }
-    }
-  }
+		}
+	}
 }
