@@ -1,5 +1,5 @@
 // import { getItem} from '@/services/book';
-import { getMapAndOptionsFromList } from "./../../../utils/lang";
+import { getMapAndOptionsFromList } from "../../../utils/lang";
 import { getMap } from "@/services/map";
 import { routerRedux } from "dva/router";
 import { message } from "antd";
@@ -15,7 +15,6 @@ export default {
   effects: {
     *fetch({ payload, callback }, { call, put }) {
       // const response = yield call(getItem);
-      const book = getStorage("book");
       if (Array.isArray(book) && book.length > 0) {
         yield put({
           type: "save",
