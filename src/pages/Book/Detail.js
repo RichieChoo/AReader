@@ -7,7 +7,7 @@ import styles from './index.less';
 const namespace = 'book';
 @connect(({ book, loading }) => ({
 	book,
-	loading: loading.models.book
+	loading: loading.effects[`${namespace}/fetch`]
 }))
 class AppComponent extends PureComponent {
 	constructor(props) {
@@ -51,7 +51,20 @@ class AppComponent extends PureComponent {
 		// });
 	};
 
-	handleShowIndex = (key) => {};
+	handleShowIndex = (key) => {
+		if (key === '2') {
+			const { dispatch, location } = this.props;
+			const { id } = location.query;
+			if (id) {
+				dispatch({
+					type: `${namespace}/fetchChapters`,
+					payload: {
+						id
+					}
+				});
+			}
+		}
+	};
 
 	render() {
 		const { book = {}, loading } = this.props;
@@ -85,12 +98,12 @@ class AppComponent extends PureComponent {
 										}
 									/>
 									<p>
-										{data.author}
+										<span className={styles.author}>{data.author}</span>
 										&nbsp;&nbsp;|&nbsp;&nbsp;
-										{data.majorCate}
+										{data.copyright}
 									</p>
 									<p>
-										<span>{data.latelyFollower}</span>
+										<span>{(data.totalFollower / 10000).toFixed(0)}万</span>
 										&nbsp;&nbsp;人气&nbsp;&nbsp;|&nbsp;&nbsp;
 										<span>
 											{data.retentionRatio}
@@ -98,6 +111,10 @@ class AppComponent extends PureComponent {
 										</span>
 										留存率
 									</p>
+									{/* <p>
+										{(data.latelyFollower / 10000).toFixed(0)}万 &nbsp;&nbsp;|&nbsp;&nbsp;
+										{(data.wordCount / 10000).toFixed(0)}万字
+									</p> */}
 									<div>
 										<Button type="primary" onClick={() => this.handleToReader(data)}>
 											点击阅读
