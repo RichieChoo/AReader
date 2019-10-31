@@ -6,8 +6,8 @@
 
 .content {
 	width: 80%;
+	min-height: 600px;
 	max-width: 960px;
-	height: 90vh;
 
 	margin: 25px auto;
 	.detailWrapper {
@@ -53,8 +53,15 @@
 		}
 	}
 	.bottomWrapper {
-		height: calc(90vh - 260px);
 		padding: 10px;
-		background: pink;
+		.chapterlist{
+			margin-top: -15px;
+			.chapterItem{
+				&:hover{
+					color: @primary-color;
+					cursor: pointer;
+				}
+			}
+		}
 	}
 }

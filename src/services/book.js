@@ -6,5 +6,8 @@ export async function getItem(id) {
 export async function getItemChapters(id) {
     return request(api.book.bookChapters(id));
 }
+export async function getSource(id) {
+    return request(api.book.bookSources(id));
+}
 
 

@@ -1,9 +1,10 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
-import { Row, Col, Card, Upload, Button, message, Modal, Spin, Tabs, Rate, Tooltip } from 'antd';
+import { Row, Col, Card, Upload, Button, message, Modal, Spin, Tabs, Rate, Tooltip, List } from 'antd';
 import { filterFalse } from '../../utils/utils';
 import styles from './index.less';
+import list from '@/models/list';
 const namespace = 'book';
 @connect(({ book, loading }) => ({
 	book,
@@ -12,9 +13,13 @@ const namespace = 'book';
 class AppComponent extends PureComponent {
 	constructor(props) {
 		super(props);
+		this.state = {
+			list: []
+		};
 	}
 	componentDidMount() {
 		this.fetchList();
+		this.fetchChapters();
 	}
 
 	fetchList = () => {
@@ -29,15 +34,16 @@ class AppComponent extends PureComponent {
 			});
 		}
 	};
-	handleToReader = (item) => {
-		const { _id } = item;
-		const { dispatch } = this.props;
-		dispatch(
-			routerRedux.push({
-				pathname: '/book/reader',
-				query: { id: _id }
-			})
-		);
+	handleToReader = (param) => {
+		const { book, chapter } = param;
+		// const { _id } = item;
+		// const { dispatch } = this.props;
+		// dispatch(
+		// 	routerRedux.push({
+		// 		pathname: '/book/reader',
+		// 		query: { id: _id }
+		// 	})
+		// );
 	};
 	handleAddToShelf = (item) => {
 		const { _id } = item;
@@ -50,25 +56,32 @@ class AppComponent extends PureComponent {
 		// 	}
 		// });
 	};
-
+	fetchChapters = () => {
+		const { dispatch, location } = this.props;
+		const { id } = location.query;
+		if (id) {
+			dispatch({
+				type: `${namespace}/fetchChapters`,
+				payload: {
+					id
+				}
+			});
+		}
+	};
 	handleShowIndex = (key) => {
 		if (key === '2') {
-			const { dispatch, location } = this.props;
-			const { id } = location.query;
-			if (id) {
-				dispatch({
-					type: `${namespace}/fetchChapters`,
-					payload: {
-						id
-					}
-				});
-			}
+			const { book = {} } = this.props;
+			const { chapters = [] } = book;
+			this.setState({
+				list: chapters.slice(0, 10)
+			});
 		}
 	};
 
 	render() {
 		const { book = {}, loading } = this.props;
 		const { data = {} } = book;
+		const { list = [] } = this.state;
 		const cover =
 			data.cover && data.cover.includes('/agent/')
 				? decodeURIComponent(data.cover.replace(/\/agent\//, ''))
@@ -79,7 +92,7 @@ class AppComponent extends PureComponent {
 					{loading ? (
 						<Spin />
 					) : (
-						<Fragment>
+						[
 							<div className={styles.detailWrapper}>
 								<div className={styles.left}>
 									<img alt={data.title} src={cover} />
@@ -99,8 +112,7 @@ class AppComponent extends PureComponent {
 									/>
 									<p>
 										<span className={styles.author}>{data.author}</span>
-										&nbsp;&nbsp;|&nbsp;&nbsp;
-										{data.copyright}
+										&nbsp;&nbsp;|&nbsp;&nbsp;{moment(data.updated).fromNow()}更新
 									</p>
 									<p>
 										<span>{(data.totalFollower / 10000).toFixed(0)}万</span>
@@ -111,34 +123,52 @@ class AppComponent extends PureComponent {
 										</span>
 										留存率
 									</p>
-									{/* <p>
-										{(data.latelyFollower / 10000).toFixed(0)}万 &nbsp;&nbsp;|&nbsp;&nbsp;
-										{(data.wordCount / 10000).toFixed(0)}万字
-									</p> */}
 									<div>
-										<Button type="primary" onClick={() => this.handleToReader(data)}>
-											点击阅读
+										<Button type="primary" onClick={() => this.handleToReader({ book: data })}>
+											阅读
 										</Button>
 										<Button type="default" onClick={() => this.handleAddToShelf(data)}>
 											加入书架
 										</Button>
 									</div>
 								</div>
-							</div>
-
+							</div>,
 							<div className={styles.bottomWrapper}>
 								<Tabs defaultActiveKey="1" onChange={this.handleShowIndex}>
 									<Tabs.TabPane tab="详情" key="1">
 										<p>{data.longIntro}</p>
-										<p>
-											<span>{moment(data.updated).fromNow()}更新:</span>
-											{data.lastChapter}
-										</p>
+										<List
+											className={styles.chapterlist}
+											itemLayout="horizontal"
+											dataSource={commentList}
+											renderItem={(item) => (
+												<List.Item
+													className={styles.chapterItem}
+													onClick={() => this.handleToReader({ chapter: item })}
+												>
+													{item.title}
+												</List.Item>
+											)}
+										/>
 									</Tabs.TabPane>
-									<Tabs.TabPane tab={`目录（${data.chaptersCount}）`} key="2" />
+									<Tabs.TabPane tab={`目录（${data.chaptersCount}）`} key="2">
+										<List
+											className={styles.chapterlist}
+											itemLayout="horizontal"
+											dataSource={list}
+											renderItem={(item) => (
+												<List.Item
+													className={styles.chapterItem}
+													onClick={() => this.handleToReader({ chapter: item })}
+												>
+													{item.title}
+												</List.Item>
+											)}
+										/>
+									</Tabs.TabPane>
 								</Tabs>
 							</div>
-						</Fragment>
+						]
 					)}
 				</div>
 			</Fragment>

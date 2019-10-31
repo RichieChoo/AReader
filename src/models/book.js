@@ -1,14 +1,14 @@
-import { getItem, getItemChapters } from '@/services/book';
-import { getMapAndOptionsFromList } from './../../../utils/lang';
+import { getItem, getSource, getItemChapters } from '@/services/book';
+import { getMapAndOptionsFromList } from '../utils/lang';
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
-import { getStorage } from '../../../utils/storage';
+import { getStorage } from '../utils/storage';
 export default {
 	namespace: 'book',
 
 	state: {
 		data: {},
-		chapters: {}
+		chapters: []
 	},
 
 	effects: {
@@ -23,12 +23,15 @@ export default {
 		},
 		*fetchChapters({ payload, callback }, { call, put }) {
 			const { id } = payload;
-			const res = yield call(getItemChapters, id);
-			yield put({
-				type: 'saveChapters',
-				payload: res
-			});
-			if (callback) callback();
+			const source = yield call(getSource, id);
+			if (source[0] && source[0]._id) {
+				const res = yield call(getItemChapters, source[0]._id);
+				yield put({
+					type: 'saveChapters',
+					payload: res.chapters 
+				});
+				if (callback) callback();
+			}
 		}
 	},
 
