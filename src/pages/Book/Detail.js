@@ -14,7 +14,9 @@ class AppComponent extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			list: []
+			list: [],
+			isloadMore: false,
+			chapterPage: 0
 		};
 	}
 	componentDidMount() {
@@ -68,12 +70,33 @@ class AppComponent extends PureComponent {
 			});
 		}
 	};
+	onLoadMore = () => {
+		this.setState({
+			isloadMore: true
+		});
+		const { book = {} } = this.props;
+		const { chapters = [] } = book;
+		const { list, chapterPage } = this.state;
+		const newList = list.concat(
+			chapterPage === 0
+				? chapters.slice(10, 100)
+				: chapters.slice((chapterPage + 1) * 100, (chapterPage + 2) * 100)
+		);
+		setTimeout(() => {
+			this.setState({
+				chapterPage: chapterPage + 1,
+				list: newList,
+				isloadMore: false
+			});
+		}, 500);
+	};
 	handleShowIndex = (key) => {
 		if (key === '2') {
 			const { book = {} } = this.props;
 			const { chapters = [] } = book;
 			this.setState({
-				list: chapters.slice(0, 10)
+				list: chapters.slice(0, 10),
+				chapterPage: 0
 			});
 		}
 	};
@@ -81,7 +104,13 @@ class AppComponent extends PureComponent {
 	render() {
 		const { book = {}, loading } = this.props;
 		const { data = {} } = book;
-		const { list = [] } = this.state;
+		const { list = [], isloadMore } = this.state;
+		const loadMore = !loading ? (
+			<p className={styles.loadMore} onClick={this.onLoadMore}>
+				加载更多
+			</p>
+		) : null;
+
 		const cover =
 			data.cover && data.cover.includes('/agent/')
 				? decodeURIComponent(data.cover.replace(/\/agent\//, ''))
@@ -137,7 +166,7 @@ class AppComponent extends PureComponent {
 								<Tabs defaultActiveKey="1" onChange={this.handleShowIndex}>
 									<Tabs.TabPane tab="详情" key="1">
 										<p>{data.longIntro}</p>
-										<List
+										{/* <List
 											className={styles.chapterlist}
 											itemLayout="horizontal"
 											dataSource={commentList}
@@ -149,12 +178,14 @@ class AppComponent extends PureComponent {
 													{item.title}
 												</List.Item>
 											)}
-										/>
+										/> */}
 									</Tabs.TabPane>
 									<Tabs.TabPane tab={`目录（${data.chaptersCount}）`} key="2">
 										<List
 											className={styles.chapterlist}
 											itemLayout="horizontal"
+											loadMore={loadMore}
+											loading={isloadMore}
 											dataSource={list}
 											renderItem={(item) => (
 												<List.Item

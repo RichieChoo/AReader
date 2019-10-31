@@ -3,7 +3,14 @@
 @border-color: #e8e8e8;
 @text-color: #434e59;
 @basic-color: #d40318;
-
+.loadMore {
+	text-align: center;
+	line-height: 35px;
+	&:hover {
+		cursor: pointer;
+		color: @primary-color;
+	}
+}
 .content {
 	width: 80%;
 	min-height: 600px;
@@ -42,8 +49,8 @@
 				font-size: 30px;
 				margin: 0;
 			}
-			.author{
-				color: @primary-color
+			.author {
+				color: @primary-color;
 			}
 			div {
 				button {
@@ -54,10 +61,10 @@
 	}
 	.bottomWrapper {
 		padding: 10px;
-		.chapterlist{
+		.chapterlist {
 			margin-top: -15px;
-			.chapterItem{
-				&:hover{
+			.chapterItem {
+				&:hover {
 					color: @primary-color;
 					cursor: pointer;
 				}
